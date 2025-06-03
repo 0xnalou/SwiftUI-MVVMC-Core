@@ -20,6 +20,7 @@ public protocol BaseViewModel: ObservableObject {
 // MARK: CommonState
 public struct CommonState {
     public var onStartLoading: AnyPublisher<Bool, Never>
+    public var toastPublisher: AnyPublisher<Toast, Never>
     public var popPublisher: AnyPublisher<Void, Never>
     public var popToRootPublisher: AnyPublisher<Void, Never>
     public var dismissPublisher: AnyPublisher<Void, Never>
