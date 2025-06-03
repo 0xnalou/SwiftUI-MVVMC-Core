@@ -21,6 +21,10 @@ open class BaseViewModelImpl: ObservableObject, CommonAction {
     
     open func onViewAppear() { }
     
+    public func showToast(_ toast: Toast) {
+        toastPublisher.send(toast)
+    }
+    
     public func pop() {
         popSubject.send()
     }
@@ -36,6 +40,7 @@ open class BaseViewModelImpl: ObservableObject, CommonAction {
     // MARK: - Properties
     public var disposeBag = Set<AnyCancellable>()
     public var onStartLoadingSubject = PassthroughSubject<Bool, Never>()
+    private var toastPublisher = PassthroughSubject<Toast, Never>()
     private var popSubject = PassthroughSubject<Void, Never>()
     private var popToRootSubject = PassthroughSubject<Void, Never>()
     private var dismissSubject = PassthroughSubject<Void, Never>()
@@ -43,6 +48,7 @@ open class BaseViewModelImpl: ObservableObject, CommonAction {
     public init() {
         self.commonState = CommonState(
             onStartLoading: onStartLoadingSubject.asDriver(),
+            toastPublisher: toastPublisher.asDriver(),
             popPublisher: popSubject.asDriver(),
             popToRootPublisher: popToRootSubject.asDriver(),
             dismissPublisher: dismissSubject.asDriver()
